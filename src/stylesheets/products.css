@@ -31,3 +31,17 @@
 .product-info-img {
   height: 60vh;
 }
+.total-amount {
+  background-color: #d2848c;
+  padding: 10px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  font-weight: bold;
+}
+
+.total-amount:hover {
+  background-color: #003f5c;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
