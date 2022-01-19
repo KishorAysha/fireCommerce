@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 function Homepage() {
   const [products1, setProducts] = useState([]);
   const { cartItems } = useSelector((state) => state.cartReducer);
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -17,6 +18,7 @@ function Homepage() {
   }, []);
   async function getData() {
     try {
+      setLoader(true);
       const products = await getDocs(collection(fireDB, "products"));
       const productsArray = [];
       products.forEach((doc) => {
@@ -25,10 +27,12 @@ function Homepage() {
           ...doc.data(),
         };
         productsArray.push(obj);
+        setLoader(false);
       });
       setProducts(productsArray);
     } catch (error) {
       console.log(error);
+      setLoader(false);
     }
   }
 
@@ -49,7 +53,7 @@ function Homepage() {
   // });
   // }
   return (
-    <LayOut>
+    <LayOut loader={loader}>
       <div className="container">
         <div className="row">
           {products1.map((product, index) => {
