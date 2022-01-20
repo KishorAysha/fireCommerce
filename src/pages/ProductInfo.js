@@ -3,11 +3,14 @@ import LayOut from "../components/LayOut";
 import { getDoc, doc } from "firebase/firestore";
 import fireDB from "../fireConfig";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProductInfo() {
   const [loader, setLoader] = useState(false);
   const [product, setProduct] = useState();
+  const dispatch = useDispatch();
   const params = useParams();
+  const { cartItems } = useSelector((state) => state.cartReducer);
   useEffect(() => {
     async function getData() {
       try {
@@ -27,6 +30,12 @@ function ProductInfo() {
     getData();
   }, [params.productid]);
 
+  const addToCart = (product) => {
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
   return (
     <LayOut loader={loader}>
       <div className="container">
@@ -45,7 +54,7 @@ function ProductInfo() {
                 <hr />
                 <p>{product.description}</p>
                 <div className="d-flex justify-content-end my-3">
-                  <button>ADD TO CART</button>
+                  <button onClick={() => addToCart()}>ADD TO CART</button>
                 </div>
               </div>
             )}

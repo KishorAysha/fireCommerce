@@ -21,6 +21,9 @@ export default function RegistrationPage() {
       console.log(result);
       setLoader(false);
       toast.success("Registration Successfull");
+      setPassword("");
+      setEmail("");
+      setcPassword("");
     } catch (error) {
       console.log(error);
       toast.error("Email already in used");

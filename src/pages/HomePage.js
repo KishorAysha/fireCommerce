@@ -11,6 +11,8 @@ function Homepage() {
   const [products1, setProducts] = useState([]);
   const { cartItems } = useSelector((state) => state.cartReducer);
   const [loader, setLoader] = useState(false);
+  const [searchKey, setSearchKey] = useState("");
+  const [filterType, setFilterType] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -55,44 +57,66 @@ function Homepage() {
   return (
     <LayOut loader={loader}>
       <div className="container">
+        <div className="d-flex w-50 m-2">
+          <input
+            className="searchInput"
+            type="text"
+            value={searchKey}
+            onChange={(e) => setSearchKey(e.target.value)}
+            placeholder="search items"
+          />
+          <select
+            className="searchSelect"
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="electronics">Electronics</option>
+            <option value="mobile">Mobiles</option>
+            <option value="fashion">Fashion</option>
+          </select>
+        </div>
         <div className="row">
-          {products1.map((product, index) => {
-            return (
-              <div className="col-md-4" key={product.id}>
-                <div className="m-2 p-1 product position-relative">
-                  <div className="product-content">
-                    <p>{product.name}</p>
-                    <div className="text-center">
-                      <img
-                        src={product.imageURL}
-                        alt=""
-                        className="product-img"
-                      />
+          {products1
+            .filter((obj) => obj.name.toLowerCase().includes(searchKey))
+            .filter((obj) => obj.catagory.toLowerCase().includes(filterType))
+            .map((product) => {
+              return (
+                <div className="col-md-4" key={product.id}>
+                  <div className="m-2 p-1 product position-relative">
+                    <div className="product-content">
+                      <p>{product.name}</p>
+                      <div className="text-center">
+                        <img
+                          src={product.imageURL}
+                          alt=""
+                          className="product-img"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="product-actions">
-                    <h2>{product.price} TK/-</h2>
-                    <div>
-                      <button
-                        className="mx-2"
-                        onClick={() => addToCart(product)}
-                      >
-                        ADD TO CART
-                      </button>
-                      <button
-                        onClick={() => navigate(`/productinfo/${product.id}`)}
-                      >
-                        VIEW
-                      </button>
-                      {/* <button type="button" onClick={addData}> */}
-                      {/* Add data */}
-                      {/* </button> */}
+                    <div className="product-actions">
+                      <h2>{product.price} TK/-</h2>
+                      <div>
+                        <button
+                          className="mx-2"
+                          onClick={() => addToCart(product)}
+                        >
+                          ADD TO CART
+                        </button>
+                        <button
+                          onClick={() => navigate(`/productinfo/${product.id}`)}
+                        >
+                          VIEW
+                        </button>
+                        {/* <button type="button" onClick={addData}> */}
+                        {/* Add data */}
+                        {/* </button> */}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     </LayOut>

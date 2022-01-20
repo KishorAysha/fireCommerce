@@ -47,5 +47,16 @@
 }
 
 .order {
-  background-color: aliceblue;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+.searchInput,
+.searchSelect {
+  margin: 2px;
+}
+.searchSelect {
+  width: 200px;
+}
+.nav-tabs {
+  background-color: cadetblue !important;
 }

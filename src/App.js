@@ -12,6 +12,7 @@ import "./stylesheets/products.css";
 import "./stylesheets/authentication.css";
 import "./stylesheets/login.css";
 import Orders from "./pages/Orders";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
@@ -48,6 +49,14 @@ function App() {
             element={
               <ProtectedRouter>
                 <Orders />
+              </ProtectedRouter>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRouter>
+                <AdminPage />
               </ProtectedRouter>
             }
           />
